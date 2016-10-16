@@ -3,7 +3,7 @@ package com.example.texture.opengl;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
-
+import android.view.MotionEvent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
@@ -24,16 +24,17 @@ public class GLSurfaceRendere implements GLSurfaceView.Renderer {
 
     private GL10 mGL;
     private Context mContext;
-
     private ArrayList<Draw2DTexture> tTexture;
 
     private Draw2DTexture tex;
+
+    private int mWidth, mHeight;
 
     //! constructor.
     public GLSurfaceRendere(Context context) {
         if (context == null)
         {
-            Log.e("ERR", "context not initialized");
+            Log.e(getClass().toString(), "context not initialized");
         } else {
             this.mContext = context;
         }
@@ -112,14 +113,16 @@ public class GLSurfaceRendere implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         this.mGL = gl;
+        this.mWidth = width;
+        this.mHeight = height;
 
         if (this.mGL == null) {
-            Log.e("GLSurfaceRendere", "GL Initialize failed\n");
+            Log.e(getClass().toString(), "GL Initialize failed\n");
             return;
         }
 
         //! ビューポート設定.
-        this.mGL.glViewport( 0, 0, width, height );
+        this.mGL.glViewport( 0, 0, this.mWidth, this.mHeight );
         this.mGL.glMatrixMode(GL10.GL_PROJECTION);
 
         this.mGL.glLoadIdentity();
@@ -144,7 +147,7 @@ public class GLSurfaceRendere implements GLSurfaceView.Renderer {
         //! failed.
         if ( bmp == null )
         {
-            Log.e("ERR", "create bitmap failed");
+            Log.e(getClass().toString(), "create bitmap failed");
             return null;
         }
 
@@ -161,7 +164,7 @@ public class GLSurfaceRendere implements GLSurfaceView.Renderer {
 
         bmp.recycle();
         if ( textures[0] == 0 ) {
-            Log.e("ERR", "create texture failed\n");
+            Log.e(getClass().toString(), "create texture failed\n");
             return null;
         } else {
             //! テクスチャクラス登録.
@@ -173,6 +176,13 @@ public class GLSurfaceRendere implements GLSurfaceView.Renderer {
         }
     }
 
+    //! 画面がタッチされたときに呼ばれる.
+    public void touched(float x, float y) {
+    	//! タッチがあった場所にエフェクト出すのもいいし.
+    	//! テクスチャに当たり判定を付けてここでチェックしてもいいかも.
+        Log.i(getClass().toString(), String.format("touched! x = %f, y = %f", x, y));
+    }
+
     public void Terminate() {
         if ( tTexture.size() != 0 ) {
             for ( Draw2DTexture texture : tTexture ) {
@@ -182,5 +192,4 @@ public class GLSurfaceRendere implements GLSurfaceView.Renderer {
             System.gc();
         }
     }
-
 }
