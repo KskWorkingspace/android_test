@@ -6,13 +6,6 @@ import android.media.SoundPool;
 
 /**
  * Created by keisuke on 2016/10/16.
- * @note.
- * SoundPoolとかMediaPlayerとかは別々のサウンドバッファで鳴らすのがいい?.
- * バッファの合成が出来るならSEに関しては合成した方がいいと思う.
- * SoundPoolってどう見てもプライマリだし、一つのアプリでプライマリのサウンドバッファを.
- * 大量に作成するって正直無い気がする(あくまで予想).
- * ならクラス内にSoundPoolを内包しないでManagereとか作ってそっちに移動した方がいいのかな?.
- * まだ未検証.
  */
 public class SoundEffect {
     private SoundPool mSound;

@@ -47,8 +47,8 @@ public class GLSurfaceRendere implements GLSurfaceView.Renderer {
         this.mGL.glMatrixMode(GL10.GL_MODELVIEW);
         this.mGL.glLoadIdentity();
 
-        this.mGL.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-        this.mGL.glClear(GL10.GL_COLOR_BUFFER_BIT);
+        this.mGL.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        this.mGL.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 
         //! alpha blend.
 		/*
